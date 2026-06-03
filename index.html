@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bapun's AI Restaurant & Hotel Management Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+    <div class="glow-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i data-lucide="sparkles" class="logo-icon animate-pulse"></i>
+                </div>
+                <div class="brand-info">
+                    <h2>BAPUN'S</h2>
+                    <span>AI-OPS HUB v2.4</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-tab="overview">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>System Overview</span>
+                </button>
+                <button class="nav-btn" data-tab="food">
+                    <i data-lucide="chef-hat"></i>
+                    <span>AI Menu Optimizer</span>
+                </button>
+                <button class="nav-btn" data-tab="forecaster">
+                    <i data-lucide="trending-up"></i>
+                    <span>ML Forecaster</span>
+                </button>
+                <button class="nav-btn" data-tab="nlp">
+                    <i data-lucide="message-square-code"></i>
+                    <span>NLP Sentiment</span>
+                </button>
+                <button class="nav-btn" data-tab="vision">
+                    <i data-lucide="eye"></i>
+                    <span>CV Kitchen Guard</span>
+                </button>
+                <button class="nav-btn" data-tab="pricing">
+                    <i data-lucide="banknote"></i>
+                    <span>Dynamic Pricing</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>AI Core Active</span>
+                </div>
+                <div class="system-stats">
+                    <div><span>CPU</span> <span>18%</span></div>
+                    <div><span>GPU Temp</span> <span>58°C</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-title">
+                    <h1 id="page-title">Operations Control</h1>
+                    <p id="page-subtitle">Real-time deep learning analytics and cognitive automated management</p>
+                </div>
+                <div class="header-actions">
+                    <div class="quick-status">
+                        <span class="label">API LATENCY:</span>
+                        <span class="value" id="latency-val">12ms</span>
+                    </div>
+                    <div class="quick-status">
+                        <span class="label">MODEL SEED:</span>
+                        <span class="value text-mono">0x7FBA89</span>
+                    </div>
+                    <button class="btn btn-primary" id="reseed-btn">
+                        <i data-lucide="refresh-cw"></i>
+                        <span>Re-Sync Models</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Tab Contents -->
+            <div class="content-body">
+                
+                <!-- Tab: System Overview -->
+                <section class="tab-panel active" id="overview-panel">
+                    <div class="metrics-grid">
+                        <div class="metric-card card-gradient-cyan">
+                            <div class="card-header">
+                                <span>AI Dynamic Occupancy</span>
+                                <i data-lucide="hotel"></i>
+                            </div>
+                            <div class="card-body">
+                                <h2>84%</h2>
+                                <span class="trend up"><i data-lucide="arrow-up-right"></i> +4.2% optimized booking</span>
+                            </div>
+                        </div>
+                        <div class="metric-card card-gradient-purple">
+                            <div class="card-header">
+                                <span>Predicted Dine-ins (Today)</span>
+                                <i data-lucide="utensils"></i>
+                            </div>
+                            <div class="card-body">
+                                <h2 id="overview-predicted-orders">184 orders</h2>
+                                <span class="trend"><i data-lucide="activity"></i> Based on weather & day features</span>
+                            </div>
+                        </div>
+                        <div class="metric-card card-gradient-green">
+                            <div class="card-header">
+                                <span>NLP Guest Satisfaction Score</span>
+                                <i data-lucide="smile"></i>
+                            </div>
+                            <div class="card-body">
+                                <h2>92.8%</h2>
+                                <span class="trend up"><i data-lucide="arrow-up-right"></i> +1.5% positive shift</span>
+                            </div>
+                        </div>
+                        <div class="metric-card card-gradient-yellow">
+                            <div class="card-header">
+                                <span>CV Compliance Alerts</span>
+                                <i data-lucide="shield-alert"></i>
+                            </div>
+                            <div class="card-body">
+                                <h2>0 Active</h2>
+                                <span class="trend green-text"><i data-lucide="check-circle-2"></i> 100% kitchen hygiene rating</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card main-chart-card">
+                            <div class="card-title-bar">
+                                <h3>Neural Network Activity Feed</h3>
+                                <div class="badge neon-blue">Cognitive System</div>
+                            </div>
+                            <div class="activity-feed" id="activity-feed">
+                                <!-- Generated Dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card side-info-card">
+                            <h3>Bapun's AI Architecture</h3>
+                            <p class="description">How our automated intelligence governs the restaurant and hotel spaces.</p>
+                            
+                            <div class="architecture-flow">
+                                <div class="flow-step">
+                                    <div class="icon-holder cyan"><i data-lucide="database"></i></div>
+                                    <div class="flow-details">
+                                        <h4>Unified Data Ingestion</h4>
+                                        <p>Collects hotel booking logs, POS orders, kitchen cameras, and review APIs in real-time.</p>
+                                    </div>
+                                </div>
+                                <div class="flow-step">
+                                    <div class="icon-holder purple"><i data-lucide="brain-circuit"></i></div>
+                                    <div class="flow-details">
+                                        <h4>Local Deep Learning Inference</h4>
+                                        <p>Runs sub-second predictions directly in the client layer to adjust pricing & monitor safety.</p>
+                                    </div>
+                                </div>
+                                <div class="flow-step">
+                                    <div class="icon-holder green"><i data-lucide="terminal"></i></div>
+                                    <div class="flow-details">
+                                        <h4>Autonomous Controls</h4>
+                                        <p>Suggests ingredient inventory purchases and updates room pricing brackets dynamically.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: ML Sales Forecaster -->
+                <section class="tab-panel" id="forecaster-panel">
+                    <div class="dual-grid">
+                        <div class="dashboard-card controls-card">
+                            <h3>Model Training Controls</h3>
+                            <p class="section-desc">Train a <strong>Linear / Polynomial Regression model</strong> in real time. We are predicting restaurant order counts based on the <em>Daily Temperature & Humidity</em>.</p>
+                            
+                            <div class="form-group">
+                                <label for="model-type">Model Architecture</label>
+                                <select id="model-type">
+                                    <option value="linear">Linear Regression (1st Degree)</option>
+                                    <option value="quadratic">Quadratic Regression (2nd Degree)</option>
+                                    <option value="cubic">Cubic Regression (3rd Degree)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="learning-rate">Learning Rate (α): <span id="lr-val">0.01</span></label>
+                                <input type="range" id="learning-rate" min="0.001" max="0.1" step="0.001" value="0.01">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="training-epochs">Epochs (Iterations): <span id="epochs-val">100</span></label>
+                                <input type="range" id="training-epochs" min="10" max="500" step="10" value="150">
+                            </div>
+
+                            <div class="btn-row">
+                                <button class="btn btn-primary" id="btn-train">
+                                    <i data-lucide="play-circle"></i>
+                                    <span>Fit Model</span>
+                                </button>
+                                <button class="btn btn-secondary" id="btn-reset-data">
+                                    <i data-lucide="rotate-ccw"></i>
+                                    <span>Regenerate Dataset</span>
+                                </button>
+                            </div>
+
+                            <div class="model-performance">
+                                <h4>Training Logs</h4>
+                                <div class="terminal-log" id="forecaster-logs">
+                                    Waiting for training trigger...
+                                </div>
+                                <div class="metric-row">
+                                    <div class="mini-metric">
+                                        <span>Training Loss (MSE)</span>
+                                        <h4 id="loss-val">--</h4>
+                                    </div>
+                                    <div class="mini-metric">
+                                        <span>R² Score</span>
+                                        <h4 id="r2-val">--</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card visual-card">
+                            <div class="card-title-bar">
+                                <h3>Loss Surface & Fitting Visualizer</h3>
+                                <div class="badge neon-green" id="training-status">Ready</div>
+                            </div>
+                            <div class="canvas-container">
+                                <canvas id="regression-canvas"></canvas>
+                            </div>
+                            <div class="canvas-legend">
+                                <span><span class="dot actual"></span> Actual Orders (Data Points)</span>
+                                <span><span class="dot predicted"></span> Model Fit Curve</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: NLP Sentiment Analyzer -->
+                <section class="tab-panel" id="nlp-panel">
+                    <div class="dual-grid">
+                        <div class="dashboard-card">
+                            <h3>Real-Time Sentiment Engine</h3>
+                            <p class="section-desc">Type in customer reviews to analyze them instantly. The NLP Engine will calculate positive/negative polarity and tag key ingredients or service parameters.</p>
+                            
+                            <div class="form-group">
+                                <label for="review-input">Guest Review/Feedback</label>
+                                <textarea id="review-input" placeholder="Type customer review here... For example: 'The Butter Chicken was delicious and creamy, but the service was extremely slow and the room was noisy.'"></textarea>
+                            </div>
+
+                            <div class="nlp-presets">
+                                <span>Try presets:</span>
+                                <button class="preset-btn" data-text="The Tandoori Roti was crisp and hot! Bapun's team gave wonderful service, highly recommended!">Positive Review</button>
+                                <button class="preset-btn" data-text="Room was dirty and bed sheets had stains. Very disappointed with hotel service. Food was average.">Negative Review</button>
+                                <button class="preset-btn" data-text="Biryani was fantastic but the air conditioner in Room 204 was leaking. Serves well overall.">Mixed Review</button>
+                            </div>
+
+                            <div class="sentiment-breakdown">
+                                <div class="sentiment-meter">
+                                    <div class="meter-bar">
+                                        <div class="meter-fill" id="sentiment-fill" style="width: 50%;"></div>
+                                    </div>
+                                    <div class="meter-labels">
+                                        <span>Negative</span>
+                                        <span id="sentiment-percent">50% Neutral</span>
+                                        <span>Positive</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <h3>NLP Extraction Metrics</h3>
+                            <div class="nlp-metrics">
+                                <div class="nlp-metric-box">
+                                    <h4>Calculated Sentiment</h4>
+                                    <div class="sentiment-badge neutral" id="sentiment-badge">NEUTRAL</div>
+                                </div>
+                                <div class="nlp-metric-box">
+                                    <h4>Analyzed Token Density</h4>
+                                    <div id="token-count" class="metric-big">0 Words</div>
+                                </div>
+                            </div>
+
+                            <h4 class="sub-heading">Entity Recognition Results</h4>
+                            <div class="entity-list" id="entity-tags">
+                                <div class="no-entities">No entities detected yet. Start typing a review above.</div>
+                            </div>
+
+                            <h4 class="sub-heading">Cleaned Tokens & Weights</h4>
+                            <div class="token-container" id="token-weights">
+                                <!-- Tokens with color indicating weight will be rendered here -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: CV Kitchen Guard -->
+                <section class="tab-panel" id="vision-panel">
+                    <div class="dual-grid">
+                        <div class="dashboard-card camera-feed-card">
+                            <div class="card-title-bar">
+                                <h3>CV Deep Inference Feed</h3>
+                                <div class="camera-selectors">
+                                    <button class="cam-btn active" data-cam="kitchen">Kitchen Prep (Cam 1)</button>
+                                    <button class="cam-btn" data-cam="dining">Dining Hall (Cam 2)</button>
+                                    <button class="cam-btn" data-cam="reception">Reception Desk (Cam 3)</button>
+                                </div>
+                            </div>
+                            
+                            <div class="video-container">
+                                <div class="camera-noise"></div>
+                                <div class="scanline"></div>
+                                <canvas id="cv-canvas"></canvas>
+                                <div class="cv-overlay-meta">
+                                    <span class="cam-id">FEED: CAM_01_HYGIENE</span>
+                                    <span class="fps">FPS: 30.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card cv-logs-card">
+                            <h3>CV Event Log & Compliance</h3>
+                            <p class="section-desc">Live detections and rule violations logged by the YOLO Kitchen safety model.</p>
+                            
+                            <div class="cv-compliance-meters">
+                                <div class="comp-meter">
+                                    <div class="meter-title">
+                                        <span>Mask & Hairnet Compliance</span>
+                                        <span id="mask-val">100%</span>
+                                    </div>
+                                    <div class="progress-bar-small"><div class="progress-fill green" id="mask-fill" style="width: 100%;"></div></div>
+                                </div>
+                                <div class="comp-meter">
+                                    <div class="meter-title">
+                                        <span>Hygiene & Sanitization Rating</span>
+                                        <span id="hygiene-val">98.5%</span>
+                                    </div>
+                                    <div class="progress-bar-small"><div class="progress-fill green" id="hygiene-fill" style="width: 98.5%;"></div></div>
+                                </div>
+                                <div class="comp-meter">
+                                    <div class="meter-title">
+                                        <span>Social Distancing & Density</span>
+                                        <span id="distancing-val">Optimal</span>
+                                    </div>
+                                    <div class="progress-bar-small"><div class="progress-fill green" id="distancing-fill" style="width: 100%;"></div></div>
+                                </div>
+                            </div>
+
+                            <h4 class="sub-heading">Real-Time Detections (Last 5 mins)</h4>
+                            <div class="cv-event-feed" id="cv-events">
+                                <!-- Populated Dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: Dynamic Room Rates -->
+                <section class="tab-panel" id="pricing-panel">
+                    <div class="dual-grid">
+                        <div class="dashboard-card">
+                            <h3>Dynamic Pricing Parameters</h3>
+                            <p class="section-desc">Bapun's Hotel uses a deep Q-learning reinforcement model to adjust booking rates. Adjust parameters below to see the dynamic price response.</p>
+                            
+                            <div class="form-group">
+                                <label for="base-rate">Base Room Rate: $<span id="base-rate-val">120</span></label>
+                                <input type="range" id="base-rate" min="50" max="300" step="5" value="120">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hotel-occupancy">Current Occupancy: <span id="occupancy-val">50%</span></label>
+                                <input type="range" id="hotel-occupancy" min="0" max="100" step="5" value="50">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="demand-factor">Market Demand (Competitor Volume): <span id="demand-val">Normal</span></label>
+                                <input type="range" id="demand-factor" min="0.5" max="2.5" step="0.1" value="1.0">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weather-impact">Local Weather Modifier</label>
+                                <select id="weather-impact">
+                                    <option value="sunny">Sunny / Pleasant (+0%)</option>
+                                    <option value="monsoon">Heavy Monsoon (+15% Indoor Demand)</option>
+                                    <option value="festival">Festival / High Season (+40% Premium)</option>
+                                    <option value="storm">Severe Storm (-20% Travel Drop)</option>
+                                </select>
+                            </div>
+
+                            <div class="pricing-output-box">
+                                <span>Suggested Room Pricing (Optimized)</span>
+                                <h1 class="pricing-headline">$<span id="final-price">120.00</span></h1>
+                                <p class="pricing-reasoning" id="pricing-reasoning">Base price calculation under standard market conditions.</p>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card flex-col">
+                            <h3>Price Elasticity Simulation</h3>
+                            <p class="section-desc">Visualizing simulated booking probability vs room price based on current model weights.</p>
+                            <div class="canvas-container">
+                                <canvas id="pricing-canvas"></canvas>
+                            </div>
+                            <div class="pricing-stats-grid">
+                                <div class="pricing-stat-box">
+                                    <span>Booking Likelihood</span>
+                                    <h4 id="booking-prob-val">68%</h4>
+                                </div>
+                                <div class="pricing-stat-box">
+                                    <span>Estimated Daily Yield</span>
+                                    <h4 id="yield-val">$4,250</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab: AI Menu Optimizer -->
+                <section class="tab-panel" id="food-panel">
+                    <div class="dual-grid">
+                        <div class="dashboard-card">
+                            <div class="card-title-bar">
+                                <h3>AI Food Optimizer Core</h3>
+                                <div class="badge neon-blue">Cognitive Matcher</div>
+                            </div>
+                            <p class="section-desc">Search foods and adjust preference neural weight parameters to recalculate matching probabilities.</p>
+                            
+                            <div class="form-group">
+                                <label for="food-search">Search Foods</label>
+                                <input type="text" id="food-search" placeholder="Type a dish name (e.g. Biryani)...">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="food-filter">Category Filter</label>
+                                <select id="food-filter">
+                                    <option value="all">All Food Items</option>
+                                    <option value="veg">Vegetarian</option>
+                                    <option value="non-veg">Non-Vegetarian</option>
+                                    <option value="starter">Starters & Breads</option>
+                                    <option value="dessert">Desserts</option>
+                                </select>
+                            </div>
+
+                            <div class="nlp-presets" style="margin-top: 10px;">
+                                <span>Quick Weights:</span>
+                                <button class="preset-btn" id="weight-spicy">Spicy Curry Fan</button>
+                                <button class="preset-btn" id="weight-budget">Budget Light Dinner</button>
+                                <button class="preset-btn" id="weight-dessert">Sweet Craving</button>
+                            </div>
+
+                            <div class="pricing-stats-grid" style="margin-bottom: 20px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label for="pref-spice">Spice Factor: <span id="pref-spice-val">3</span>/5</label>
+                                    <input type="range" id="pref-spice" min="1" max="5" step="1" value="3">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label for="pref-budget">Max Budget: $<span id="pref-budget-val">15</span></label>
+                                    <input type="range" id="pref-budget" min="2" max="25" step="1" value="15">
+                                </div>
+                            </div>
+
+                            <div class="food-grid-container" id="food-grid">
+                                <!-- Food items populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card" id="food-diagnostic-card">
+                            <h3>Food Deep Diagnostic Report</h3>
+                            <div class="selected-food-details" id="selected-food-empty">
+                                <div class="no-entities">Select a food item from the list to run neural diagnostics.</div>
+                            </div>
+                            <div class="selected-food-details hidden" id="selected-food-info">
+                                <div class="food-header-block">
+                                    <div class="food-avatar" id="food-diag-avatar"><i data-lucide="cooking-pot"></i></div>
+                                    <div>
+                                        <h4 id="food-diag-name">Butter Chicken</h4>
+                                        <span class="badge neon-blue" id="food-diag-category">NON-VEG</span>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-stats-grid" style="margin-top: 20px;">
+                                    <div class="pricing-stat-box">
+                                        <span>AI MATCH SCORE</span>
+                                        <h4 id="food-diag-match" class="green-text">98%</h4>
+                                    </div>
+                                    <div class="pricing-stat-box">
+                                        <span>BASE COST</span>
+                                        <h4 id="food-diag-cost">$14.50</h4>
+                                    </div>
+                                </div>
+
+                                <h4 class="sub-heading" style="margin-top: 24px;">Deep Learning Demand Forecast</h4>
+                                <div class="mini-metric" style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px; margin-bottom: 16px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <span style="font-size: 0.72rem; color: var(--text-muted);">TOMORROW'S PREDICTION</span>
+                                            <h4 style="font-size: 1.15rem; font-family: 'JetBrains Mono', monospace;" id="food-diag-predicted">45 Orders (High)</h4>
+                                        </div>
+                                        <div class="sentiment-badge positive" id="food-diag-status-badge">STABLE</div>
+                                    </div>
+                                </div>
+
+                                <h4 class="sub-heading">CNN Chemical & Nutrition Analysis</h4>
+                                <div class="cv-compliance-meters" style="margin-bottom: 24px;">
+                                    <div class="comp-meter">
+                                        <div class="meter-title">
+                                            <span>Calories</span>
+                                            <span id="food-diag-cal">540 kcal</span>
+                                        </div>
+                                        <div class="progress-bar-small"><div class="progress-fill green" id="food-diag-cal-fill" style="width: 70%;"></div></div>
+                                    </div>
+                                    <div class="comp-meter">
+                                        <div class="meter-title">
+                                            <span>Protein Content</span>
+                                            <span id="food-diag-protein">28g</span>
+                                        </div>
+                                        <div class="progress-bar-small"><div class="progress-fill green" id="food-diag-protein-fill" style="width: 56%;"></div></div>
+                                    </div>
+                                </div>
+
+                                <h4 class="sub-heading">NLP Sentiment Index</h4>
+                                <div class="sentiment-meter" style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px;">
+                                    <div class="meter-bar">
+                                        <div class="meter-fill" id="food-diag-sentiment-fill" style="width: 82%;"></div>
+                                    </div>
+                                    <div class="meter-labels">
+                                        <span>Negative</span>
+                                        <span id="food-diag-sentiment-percent">82% Positive</span>
+                                        <span>Positive</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Main JavaScript Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
