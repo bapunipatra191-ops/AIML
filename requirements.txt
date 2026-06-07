@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+numpy
+google-generativeai
+python-dotenv
+pymysql
+cryptography
+sqlalchemy

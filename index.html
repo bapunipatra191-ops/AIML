@@ -59,9 +59,26 @@
             </nav>
 
             <div class="sidebar-footer">
+                <!-- Database connection status -->
+                <div class="db-status-container" id="db-status-container" style="font-size: 0.75rem; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; display: flex; flex-direction: column; gap: 4px;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span class="pulse-dot green-pulse" id="db-status-dot"></span>
+                        <span id="db-status-text">MySQL connected</span>
+                    </div>
+                </div>
+                <!-- Gemini Config -->
+                <div class="gemini-config-box" style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
+                    <label for="gemini-key-input" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; align-items: center;">
+                        <span>GEMINI AI KEY</span>
+                        <span id="ai-mode-badge" class="badge neon-yellow" style="font-size: 0.55rem; padding: 2px 6px;">SIMULATED</span>
+                    </label>
+                    <div style="display: flex; gap: 6px;">
+                        <input type="password" id="gemini-key-input" placeholder="Paste API Key..." style="width: 100%; font-size: 0.75rem; padding: 6px 10px; border-radius: 6px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: var(--text-primary); outline: none;">
+                    </div>
+                </div>
                 <div class="status-indicator">
-                    <span class="pulse-dot"></span>
-                    <span>AI Core Active</span>
+                    <span class="pulse-dot" id="core-status-dot"></span>
+                    <span id="core-status-text">AI Core Active</span>
                 </div>
                 <div class="system-stats">
                     <div><span>CPU</span> <span>18%</span></div>
@@ -306,10 +323,20 @@
                                 <div class="no-entities">No entities detected yet. Start typing a review above.</div>
                             </div>
 
-                            <h4 class="sub-heading">Cleaned Tokens & Weights</h4>
-                            <div class="token-container" id="token-weights">
+                             <h4 class="sub-heading">Cleaned Tokens & Weights</h4>
+                            <div class="token-container" id="token-weights" style="margin-bottom: 20px;">
                                 <!-- Tokens with color indicating weight will be rendered here -->
                             </div>
+
+                            <h4 class="sub-heading">AI Suggested Response Reply</h4>
+                            <div class="form-group" style="margin-top: 8px; margin-bottom: 16px;">
+                                <textarea id="nlp-suggested-reply" readonly placeholder="AI generated response reply will render here..." style="font-size: 0.85rem; min-height: 80px; background: rgba(0,0,0,0.2);"></textarea>
+                            </div>
+                            
+                            <h4 class="sub-heading">AI Recommended Action Items</h4>
+                            <ul id="nlp-action-items" style="list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; padding-left: 0;">
+                                <li style="display: flex; align-items: center; gap: 8px;"><i data-lucide="check-square" style="width: 14px; height: 14px; color: var(--text-muted);"></i> Waiting for input...</li>
+                            </ul>
                         </div>
                     </div>
                 </section>
@@ -366,9 +393,22 @@
                                 </div>
                             </div>
 
-                            <h4 class="sub-heading">Real-Time Detections (Last 5 mins)</h4>
-                            <div class="cv-event-feed" id="cv-events">
+                             <h4 class="sub-heading">Real-Time Detections (Last 5 mins)</h4>
+                            <div class="cv-event-feed" id="cv-events" style="margin-bottom: 20px;">
                                 <!-- Populated Dynamically -->
+                            </div>
+
+                            <div class="safety-report-section" style="border-top: 1px solid var(--border-color); padding-top: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <h4 class="sub-heading" style="margin-bottom: 0;">AI Shift Safety Audit Memo</h4>
+                                    <button class="btn btn-secondary" id="btn-generate-cv-report" style="padding: 6px 12px; font-size: 0.8rem;">
+                                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                                        <span>Generate Report</span>
+                                    </button>
+                                </div>
+                                <div id="cv-report-container" class="hidden" style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary); max-height: 200px; overflow-y: auto; white-space: pre-wrap;">
+                                    Waiting for report generation...
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -477,6 +517,33 @@
                                 </div>
                             </div>
 
+                             <!-- Generative Brainstormer -->
+                            <div class="generative-brainstormer" style="border: 1px dashed var(--border-color); padding: 14px; border-radius: 12px; margin-bottom: 20px; background: rgba(157, 78, 221, 0.03);">
+                                <h4 style="font-size: 0.85rem; color: var(--neon-purple); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
+                                    <span>AI Generative Dish Brainstormer</span>
+                                </h4>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <input type="text" id="brainstorm-prompt" placeholder="Special requirements (e.g. Mango fusion, keto)..." style="font-size: 0.8rem; padding: 8px 10px; width: 100%;">
+                                </div>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <button class="btn btn-secondary" id="btn-brainstorm" style="padding: 6px 12px; font-size: 0.8rem; flex-grow: 1;">
+                                        <i data-lucide="wand-2" style="width: 14px; height: 14px;"></i>
+                                        <span>Brainstorm Recipe</span>
+                                    </button>
+                                </div>
+                                <div id="brainstorm-result-box" class="hidden" style="margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 10px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                                        <div>
+                                            <h5 id="brainstorm-name" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);">New Dish</h5>
+                                            <span id="brainstorm-meta" style="font-size: 0.72rem; color: var(--text-muted);">Veg | $12.00</span>
+                                        </div>
+                                        <button class="btn btn-primary" id="btn-add-brainstormed" style="padding: 4px 8px; font-size: 0.75rem;">Add to Menu</button>
+                                    </div>
+                                    <p id="brainstorm-reason" style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4;"></p>
+                                </div>
+                            </div>
+
                             <div class="food-grid-container" id="food-grid">
                                 <!-- Food items populated dynamically -->
                             </div>
@@ -554,6 +621,46 @@
 
             </div>
         </main>
+    </div>
+
+    <!-- Floating AI Copilot Widget -->
+    <div class="ai-copilot-container" id="ai-copilot-container">
+        <!-- Floating Button -->
+        <button class="ai-copilot-btn" id="ai-copilot-btn" title="Open Bapun's AI Operations Copilot">
+            <i data-lucide="message-circle" class="copilot-icon"></i>
+            <span class="notification-dot"></span>
+        </button>
+
+        <!-- Chat Window -->
+        <div class="ai-copilot-window" id="ai-copilot-window">
+            <div class="copilot-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="copilot-avatar">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #fff;">AI Operations Copilot</h4>
+                        <span id="copilot-status" style="font-size: 0.65rem; color: var(--neon-blue); font-family: 'JetBrains Mono', monospace; display: block;">Gemini Engine Active</span>
+                    </div>
+                </div>
+                <button class="close-copilot-btn" id="close-copilot-btn">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <div class="copilot-messages" id="copilot-messages">
+                <div class="message system-msg">
+                    <p>Hello! I am your AI Operations Copilot. Ask me questions about today's predictions, room rate yields, kitchen compliance reports, or ask me to draft responses to guest feedback!</p>
+                </div>
+            </div>
+
+            <div class="copilot-input-area">
+                <input type="text" id="copilot-input" placeholder="Type a command or query...">
+                <button id="copilot-send-btn">
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Main JavaScript Logic -->
