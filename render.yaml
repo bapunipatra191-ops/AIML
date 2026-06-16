@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: bapun-restaurant-hub
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: MYSQL_HOST
+        sync: false
+        placeholder: "Enter MySQL host (e.g. your-database.aivencloud.com or 'localhost' if running locally)"
+      - key: MYSQL_USER
+        sync: false
+        placeholder: "Enter MySQL username"
+      - key: MYSQL_PASSWORD
+        sync: false
+        placeholder: "Enter MySQL password"
+      - key: MYSQL_DB
+        sync: false
+        placeholder: "bapun_ai_ops"
+      - key: MYSQL_PORT
+        value: "3306"
+      - key: GEMINI_API_KEY
+        sync: false
+        placeholder: "Optional: Enter Google Gemini API Key"

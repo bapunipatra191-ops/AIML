@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: restaurant_mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: bapun_ai_ops
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  web:
+    build: .
+    container_name: restaurant_web_app
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=rootpassword
+      - MYSQL_DB=bapun_ai_ops
+      - MYSQL_PORT=3306
+      - PORT=8000
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
